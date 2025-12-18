@@ -65,10 +65,14 @@ aws ec2 describe-route-tables --region $REGION \
 done
 
 echo "🔥 Deleting VPCs (non-default)..."
-aws ec2 describe-vpcs --region $REGION \
-  --query "Vpcs[?IsDefault==\`false\`].VpcId" --output text | while read vpc; do
-    echo "Deleting VPC $vpc"
-    aws ec2 delete-vpc --vpc-id "$vpc" --region $REGION || true
+
+VPCS=$(aws ec2 describe-vpcs --region $REGION \
+  --query "Vpcs[?IsDefault==\`false\`].VpcId" --output text)
+
+for vpc in $VPCS; do
+  echo "Deleting VPC $vpc"
+  aws ec2 delete-vpc --vpc-id "$vpc" --region $REGION || true
 done
+
 
 echo "✅ AWS account CLEANED SUCCESSFULLY"
