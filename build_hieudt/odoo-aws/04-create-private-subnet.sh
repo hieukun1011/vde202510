@@ -1,0 +1,13 @@
+#!/bin/bash
+source ./env.sh
+
+PRIVATE_SUBNET_ID=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block $PRIVATE_SUBNET_CIDR \
+  --availability-zone $AZ \
+  --tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=private-subnet}]" \
+  --query "Subnet.SubnetId" \
+  --output text)
+
+echo "PRIVATE_SUBNET_ID=$PRIVATE_SUBNET_ID" >> env.sh
+echo "✅ Private subnet created"
