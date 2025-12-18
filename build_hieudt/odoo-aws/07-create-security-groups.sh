@@ -3,6 +3,12 @@ set -e
 
 VPC_ID=$(cat .vpc_id)
 
+if [ -z "$VPC_ID" ]; then
+  echo "❌ VPC_ID not found"
+  exit 1
+fi
+
+echo "🚀 Creating Internet Gateway for $VPC_ID"
 # Odoo SG
 SG_ODOO=$(aws ec2 create-security-group \
   --group-name sg-odoo \
