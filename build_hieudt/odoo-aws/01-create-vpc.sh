@@ -12,5 +12,5 @@ VPC_ID=$(aws ec2 create-vpc \
 aws ec2 modify-vpc-attribute --vpc-id $VPC_ID --enable-dns-support
 aws ec2 modify-vpc-attribute --vpc-id $VPC_ID --enable-dns-hostnames
 
-echo "VPC_ID=$VPC_ID" >> env.sh
+echo "VPC_ID=$VPC_ID" >> .vpc_id
 echo "✅ VPC created: $VPC_ID"

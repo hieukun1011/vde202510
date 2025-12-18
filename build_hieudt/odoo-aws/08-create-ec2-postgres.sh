@@ -3,9 +3,9 @@ set -e
 
 echo "🚀 Creating EC2 PostgreSQL..."
 
-VPC_ID=$(cat ./env.sh)
-PRIVATE_SUBNET_ID=$(cat ./env.sh)
-SG_DB=$(cat ./env.sh)
+VPC_ID=$(cat .vpc_id)
+PRIVATE_SUBNET_ID=$(cat .private_subnet_id)
+SG_DB=$(cat .sg_postgres_id)
 
 AMI_ID=ami-0e86e20dae9224db8   # Ubuntu 22.04 us-east-1
 KEY_NAME=mykey
