@@ -4,7 +4,7 @@ set -e
 echo "🚀 Creating EC2 Odoo..."
 
 PUBLIC_SUBNET_ID=$(cat ./env.sh)
-SG_ODOO=$(cat .sg_odoo_id)
+SG_ODOO=$(cat ./env.sh)
 
 AMI_ID=ami-0e86e20dae9224db8
 KEY_NAME=mykey

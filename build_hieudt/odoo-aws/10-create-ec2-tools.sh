@@ -4,7 +4,7 @@ set -e
 echo "🚀 Creating EC2 Tools..."
 
 PUBLIC_SUBNET_ID=$(cat ./env.sh)
-SG_TOOLS=$(cat .sg_tools_id)
+SG_TOOLS=$(cat ./env.sh)
 
 AMI_ID=ami-0e86e20dae9224db8
 KEY_NAME=mykey
