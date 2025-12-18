@@ -1,0 +1,68 @@
+Resources:
+
+  OdooSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP, SSH, Odoo
+      VpcId: !ImportValue VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8069
+          ToPort: 8069
+          CidrIp: 0.0.0.0/0
+
+  PostgresEC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.micro
+      ImageId: ami-0df7a207adb9748c7   # Amazon Linux 2 (Academy OK)
+      SubnetId: !ImportValue PrivateSubnetId
+      SecurityGroupIds:
+        - !Ref OdooSG
+      KeyName: YOUR_KEY_NAME
+      Tags:
+        - Key: Name
+          Value: EC2-POSTGRES
+
+  OdooEC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.medium
+      ImageId: ami-0df7a207adb9748c7
+      SubnetId: !ImportValue PublicSubnetId
+      SecurityGroupIds:
+        - !Ref OdooSG
+      KeyName: YOUR_KEY_NAME
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum update -y
+          yum install docker -y
+          systemctl start docker
+          systemctl enable docker
+          docker run -d -p 8069:8069 --name odoo \
+            -e HOST=PRIVATE_POSTGRES_IP \
+            -e USER=odoo \
+            -e PASSWORD=odoo \
+            odoo:17
+      Tags:
+        - Key: Name
+          Value: EC2-ODOO
+
+  ToolsEC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.medium
+      ImageId: ami-0df7a207adb9748c7
+      SubnetId: !ImportValue PublicSubnetId
+      SecurityGroupIds:
+        - !Ref OdooSG
+      KeyName: YOUR_KEY_NAME
+      Tags:
+        - Key: Name
+          Value: EC2-TOOLS
+
