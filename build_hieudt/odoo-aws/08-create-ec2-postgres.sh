@@ -3,7 +3,7 @@ set -e
 
 echo "🚀 Creating EC2 PostgreSQL..."
 
-VPC_ID=$(cat .vpc_id)
+VPC_ID=$(cat ./env.sh)
 PRIVATE_SUBNET_ID=$(cat .private_subnet_id)
 SG_DB=$(cat .sg_postgres_id)
 
