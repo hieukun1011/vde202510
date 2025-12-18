@@ -10,6 +10,7 @@ USER_DATA=$(cat <<EOF
 set -e
 
 DB_HOST=${POSTGRES_PRIVATE_IP}
+DB_PORT=5432
 
 apt update -y
 curl -fsSL https://get.docker.com | bash
@@ -19,6 +20,14 @@ systemctl start docker
 curl -L https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-linux-x86_64 \
   -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
+
+apt install -y netcat
+
+echo "⏳ Waiting for PostgreSQL at \$DB_HOST:\$DB_PORT..."
+until nc -z \$DB_HOST \$DB_PORT; do
+  sleep 5
+done
+echo "✅ PostgreSQL is ready"
 
 mkdir -p /opt/odoo
 cd /opt/odoo
@@ -40,9 +49,6 @@ services:
 volumes:
   odoo-data:
 EOC
-
-# Đợi PostgreSQL sẵn sàng
-sleep 30
 
 docker compose up -d
 EOF
