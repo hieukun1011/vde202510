@@ -58,7 +58,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --instance-type "$INSTANCE_TYPE" \
   --key-name "$KEY_NAME" \
   --security-group-ids "$SG_ID" \
-  --user-data file://user_data.sh \
+  --user-data file://$(dirname "$0")/user_data.sh \
   --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=auto-docker-ec2}]' \
   --query "Instances[0].InstanceId" \
   --output text)
