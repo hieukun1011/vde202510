@@ -1,6 +1,8 @@
 #!/bin/bash
 source ./env.sh
 VPC_ID=$(cat .vpc_id)
+IGW_ID=$(cat .igw_id)
+PUBLIC_SUBNET_ID=$(cat .public_subnet_id)
 
 if [ -z "$VPC_ID" ]; then
   echo "❌ VPC_ID not found"
