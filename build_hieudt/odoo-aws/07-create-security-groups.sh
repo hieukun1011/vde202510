@@ -11,7 +11,7 @@ fi
 echo "🚀 Creating Internet Gateway for $VPC_ID"
 # Odoo SG
 SG_ODOO=$(aws ec2 create-security-group \
-  --group-name sg-odoo \
+  --group-name odoo-sg \
   --description "Odoo SG" \
   --vpc-id $VPC_ID \
   --query "GroupId" \
@@ -29,7 +29,7 @@ echo $SG_ODOO > .sg_odoo_id
 
 # Postgres SG
 SG_POSTGRES=$(aws ec2 create-security-group \
-  --group-name sg-postgres \
+  --group-name postgres-sg \
   --description "Postgres SG" \
   --vpc-id $VPC_ID \
   --query "GroupId" \
@@ -43,7 +43,7 @@ echo $SG_POSTGRES > .sg_postgres_id
 
 # Tools SG
 SG_TOOLS=$(aws ec2 create-security-group \
-  --group-name sg-tools \
+  --group-name tools-sg \
   --description "Tools SG" \
   --vpc-id $VPC_ID \
   --query "GroupId" \
