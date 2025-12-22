@@ -14,6 +14,7 @@ RT_PRIVATE_ID=$(aws ec2 create-route-table \
   --query "RouteTable.RouteTableId" \
   --output text)
 
+echo "🚀 Creating associate-route-table for $RT_PRIVATE_ID and $PRIVATE_SUBNET_ID"
 aws ec2 associate-route-table \
   --route-table-id $RT_PRIVATE_ID \
   --subnet-id $PRIVATE_SUBNET_ID
