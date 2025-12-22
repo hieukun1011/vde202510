@@ -21,4 +21,4 @@ aws ec2 modify-subnet-attribute \
   --map-public-ip-on-launch
 
 echo "PUBLIC_SUBNET_ID=$PUBLIC_SUBNET_ID" >> .public_subnet_id
-echo "✅ Public subnet created"
+echo "✅ Public subnet created $PUBLIC_SUBNET_ID"

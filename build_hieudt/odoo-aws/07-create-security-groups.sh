@@ -55,4 +55,4 @@ aws ec2 authorize-security-group-ingress \
 
 echo $SG_TOOLS > .sg_tools_id
 
-echo "✅ Security groups created"
+echo "✅ Security groups created $SG_TOOLS"

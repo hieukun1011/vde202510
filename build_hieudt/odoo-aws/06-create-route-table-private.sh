@@ -19,4 +19,4 @@ aws ec2 associate-route-table \
   --subnet-id $PRIVATE_SUBNET_ID
 
 echo "RT_PRIVATE_ID=$RT_PRIVATE_ID" >> env.sh
-echo "✅ Private route table ready"
+echo "✅ Private route table ready $RT_PRIVATE_ID"

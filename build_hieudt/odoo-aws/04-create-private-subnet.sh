@@ -17,4 +17,4 @@ PRIVATE_SUBNET_ID=$(aws ec2 create-subnet \
   --output text)
 
 echo "PRIVATE_SUBNET_ID=$PRIVATE_SUBNET_ID" >> .private_subnet_id
-echo "✅ Private subnet created"
+echo "✅ Private subnet created $PRIVATE_SUBNET_ID"

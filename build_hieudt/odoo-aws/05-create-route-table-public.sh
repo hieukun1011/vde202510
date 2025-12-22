@@ -26,4 +26,4 @@ aws ec2 associate-route-table \
   --subnet-id $PUBLIC_SUBNET_ID
 
 echo "RT_PUBLIC_ID=$RT_PUBLIC_ID" >> env.sh
-echo "✅ Public route table ready"
+echo "✅ Public route table ready $RT_PUBLIC_ID"
