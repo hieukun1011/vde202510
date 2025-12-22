@@ -16,11 +16,13 @@ RT_PUBLIC_ID=$(aws ec2 create-route-table \
   --query "RouteTable.RouteTableId" \
   --output text)
 
+echo "🚀 Creating create-route for $RT_PUBLIC_ID"
 aws ec2 create-route \
   --route-table-id $RT_PUBLIC_ID \
   --destination-cidr-block 0.0.0.0/0 \
   --gateway-id $IGW_ID
 
+echo "🚀 Creating associate-route-table for route-table-id $RT_PUBLIC_ID subnet-id $PUBLIC_SUBNET_ID"
 aws ec2 associate-route-table \
   --route-table-id $RT_PUBLIC_ID \
   --subnet-id $PUBLIC_SUBNET_ID
