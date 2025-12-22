@@ -23,6 +23,10 @@ aws ec2 create-route \
   --gateway-id $IGW_ID
 
 echo "🚀 Creating associate-route-table for route-table-id $RT_PUBLIC_ID subnet-id $PUBLIC_SUBNET_ID"
+echo "DEBUG:"
+echo "VPC_ID=$VPC_ID"
+echo "IGW_ID=$IGW_ID"
+echo "PUBLIC_SUBNET_ID=$PUBLIC_SUBNET_ID"
 aws ec2 associate-route-table \
   --route-table-id $RT_PUBLIC_ID \
   --subnet-id $PUBLIC_SUBNET_ID
