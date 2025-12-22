@@ -2,8 +2,7 @@
 source ./env.sh
 VPC_ID=$(cat .vpc_id)
 IGW_ID=$(cat .igw_id)
-#PUBLIC_SUBNET_ID=$(cut -d= -f2 .public_subnet_id)
-PUBLIC_SUBNET_ID=$(head -n 1 .public_subnet_id)
+PUBLIC_SUBNET_ID=$(cut -d= -f2 head -n 1 .public_subnet_id)
 
 if [ -z "$VPC_ID" ]; then
   echo "❌ VPC_ID not found"
