@@ -1,10 +1,17 @@
+#!/bin/bash
+set -e
+
+source ./env.sh
+
+PUBLIC_SUBNET_ID=$(cat .public_subnet_id)
+
 EIP_ALLOC_ID=$(aws ec2 allocate-address \
   --domain vpc \
   --region $REGION \
   --query "AllocationId" \
   --output text)
 
-PUBLIC_SUBNET_ID=$(cat .public_subnet_id)
+
 
 NAT_GW_ID=$(aws ec2 create-nat-gateway \
   --subnet-id $PUBLIC_SUBNET_ID \
