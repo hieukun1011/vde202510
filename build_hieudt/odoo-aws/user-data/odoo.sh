@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-POSTGRES_HOST="10.0.2.214"   # 🔴 IP PRIVATE CỦA POSTGRES EC2
+POSTGRES_HOST="10.0.2.76"   # 🔴 IP PRIVATE CỦA POSTGRES EC2
 
 echo "🚀 Installing Docker for Odoo..."
 
