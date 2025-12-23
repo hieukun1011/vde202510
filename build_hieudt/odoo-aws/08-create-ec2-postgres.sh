@@ -4,30 +4,24 @@ set -e
 echo "🚀 Creating EC2 PostgreSQL..."
 
 VPC_ID=$(cat .vpc_id)
-
-if [ -z "$VPC_ID" ]; then
-  echo "❌ VPC_ID not found"
-  exit 1
-fi
-
-echo "🚀 Creating Internet Gateway for $VPC_ID"
+[ -z "$VPC_ID" ] && echo "❌ VPC_ID not found" && exit 1
 
 PRIVATE_SUBNET_ID=$(cat .private_subnet_id)
+[ -z "$PRIVATE_SUBNET_ID" ] && echo "❌ PRIVATE_SUBNET_ID not found" && exit 1
 
-if [ -z "PRIVATE_SUBNET_ID" ]; then
-  echo "❌ PRIVATE_SUBNET_ID not found"
-  exit 1
-fi
-
-echo "🚀 Creating Internet Gateway for PRIVATE_SUBNET_ID"
 SG_DB=$(cat .sg_postgres_id)
+[ -z "$SG_DB" ] && echo "❌ SG_DB not found" && exit 1
 
-if [ -z "SG_DB" ]; then
-  echo "❌ SG_DB not found"
-  exit 1
-fi
+SG_ODOO=$(cat .sg_odoo_id)
+[ -z "$SG_ODOO" ] && echo "❌ SG_ODOO not found" && exit 1
 
-echo "🚀 Creating Internet Gateway for SG_DB"
+echo "🔐 Allow SSH from Odoo to PostgreSQL"
+aws ec2 authorize-security-group-ingress \
+  --group-id $SG_DB \
+  --protocol tcp \
+  --port 22 \
+  --source-group $SG_ODOO \
+  || echo "⚠️ SSH rule already exists"
 
 AMI_ID=ami-0e86e20dae9224db8   # Ubuntu 22.04 us-east-1
 KEY_NAME=mykey
