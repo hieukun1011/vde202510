@@ -1,21 +1,32 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Installing Docker for PostgreSQL..."
+echo "🚀 Installing Docker & PostgreSQL..."
 
+# Update
 apt update -y
-apt install -y ca-certificates curl gnupg lsb-release
 
-curl -fsSL https://get.docker.com | sh
-usermod -aG docker ubuntu
+# Install Docker + compose plugin
+apt install -y \
+  ca-certificates \
+  curl \
+  gnupg \
+  lsb-release \
+  docker.io \
+  docker-compose-plugin
 
 systemctl enable docker
 systemctl start docker
 
+# Add ubuntu to docker group (cho login sau)
+usermod -aG docker ubuntu
+
+# Prepare folder
 mkdir -p /opt/postgres
 cd /opt/postgres
 
-cat <<EOF > docker-compose.yml
+# Create docker-compose.yml
+cat <<'EOF' > docker-compose.yml
 version: "3.8"
 
 services:
@@ -30,12 +41,13 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "10.0.2.76:5432:5432"
+      - "5432:5432"
+
+volumes:
+  pgdata:
 EOF
 
-echo "volumes:
-  pgdata:" >> docker-compose.yml
-
+# Start PostgreSQL
 docker compose up -d
 
-echo "✅ PostgreSQL is running"
+echo "✅ PostgreSQL container started"
