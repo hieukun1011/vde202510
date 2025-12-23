@@ -30,7 +30,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "10.0.2.76:5432:5432"
 EOF
 
 echo "volumes:
